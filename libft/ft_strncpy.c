@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/11/25 19:58:41 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/23 19:36:36 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	size_t i;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	i = 0;
+	while (src[i] != '\0' && i < n)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		dest[i] = src[i];
+		i++;
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }

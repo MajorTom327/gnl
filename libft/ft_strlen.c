@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/11/23 14:43:49 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/02 04:10:31 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+size_t	ft_strlen(char const *s)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	size_t len;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
-	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
-	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
 }

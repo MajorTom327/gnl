@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2016/01/12 17:18:44 by vthomas           #+#    #+#             */
+/*   Updated: 2016/01/22 20:24:47 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+t_list	*ft_lstnew(void const *content, size_t content_size)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	t_list	*val;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	val = ft_memalloc(sizeof(val));
+	if (val == NULL)
+		return (NULL);
+	if (content == NULL)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		val->content = NULL;
+		val->content_size = 0;
+		return (val);
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	val->content = ft_memalloc(content_size);
+	if (val->content == NULL)
+		return (NULL);
+	ft_memcpy(val->content, content, content_size);
+	return (val);
 }

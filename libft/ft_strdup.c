@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/11/27 22:38:30 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/15 11:30:32 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+char	*ft_strdup(const char *s)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	size_t	index;
+	char	*result;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	result = ft_strnew(ft_strlen(s));
+	if (result == NULL)
+		return (NULL);
+	index = 0;
+	while (index != ft_strlen(s))
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		result[index] = s[index];
+		index++;
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	return (result);
 }

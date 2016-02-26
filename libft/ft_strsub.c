@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/11/25 19:50:36 by vthomas           #+#    #+#             */
+/*   Updated: 2015/11/25 19:51:09 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	unsigned int const	init_start = start;
+	char				*str_result;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	if (start > len)
+		return (NULL);
+	str_result = ft_strnew(len);
+	if (str_result == NULL)
+		return (NULL);
+	start = 0;
+	while (start < len)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		str_result[start] = s[start + init_start];
+		start++;
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	return (str_result);
 }

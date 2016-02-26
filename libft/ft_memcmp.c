@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/12/01 04:23:07 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/23 20:44:55 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	size_t				i;
+	const unsigned char	*s1_cpy = (const unsigned char *)s1;
+	const unsigned char	*s2_cpy = (const unsigned char *)s2;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (s1_cpy[i] == s2_cpy[i] && n > i)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		if (i == (n - 1))
+			return (0);
+		i++;
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	return ((int)(s1_cpy[i] - s2_cpy[i]));
 }

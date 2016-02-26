@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/11/25 19:51:28 by vthomas           #+#    #+#             */
+/*   Updated: 2015/11/25 19:52:31 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	size_t	size_str;
+	size_t	index;
+	char	*str_conc;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	size_str = (ft_strlen(s1) + ft_strlen(s2));
+	str_conc = ft_strnew(size_str);
+	if (str_conc == NULL)
+		return (NULL);
+	index = 0;
+	while (index < size_str)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		if (index < ft_strlen(s1))
+			str_conc[index] = s1[index];
+		else
+			str_conc[index] = s2[index - ft_strlen(s1)];
+		index++;
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	return (str_conc);
 }

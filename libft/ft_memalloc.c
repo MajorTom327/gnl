@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/11/25 19:38:25 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/01 04:00:58 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+void	*ft_memalloc(size_t t)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	void	*memory;
+	char	*tmp_mem;
+	size_t	i;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	memory = NULL;
+	i = 0;
+	memory = malloc(t);
+	if (memory == NULL)
+		return (NULL);
+	tmp_mem = (char *)memory;
+	while (i <= t)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		tmp_mem[i] = 0;
+		i++;
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	return (memory);
 }

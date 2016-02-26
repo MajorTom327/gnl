@@ -29,7 +29,7 @@ endif
 SRC_PATH=./src/
 INC_PATH=./include/
 OBJ_PATH=./obj/
-LIB_PATH=./lib/
+LIB_PATH=./
 
 SRC_NAME=main.c\
 		 get_next_line.c

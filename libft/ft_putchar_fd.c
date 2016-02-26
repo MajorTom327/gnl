@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_ft.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/11/23 17:00:39 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/16 13:30:57 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+static void	print(unsigned short c, int fd)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	write(fd, (void *)&c, 1);
+}
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+void		ft_putchar_fd(char c, int fd)
+{
+	unsigned short my_letter;
+
+	if (c < 0)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		my_letter = (unsigned char)(0xFF & c);
+		print((0xC0) | (my_letter >> 6), fd);
+		print((0x80) | (my_letter & 0x3F), fd);
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	else
+		write(fd, &c, 1);
 }

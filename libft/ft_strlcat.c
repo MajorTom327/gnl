@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/12/20 17:54:59 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/20 22:06:14 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	size_t i;
+	size_t len1;
+	size_t len2;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	len1 = ft_strlen(dst);
+	len2 = ft_strlen(src);
+	i = 0;
+	if (size > len1 + 1)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		while (i < size - len1 - 1)
+		{
+			dst[len1 + i] = src[i];
+			i++;
+		}
+		dst[len1 + i] = '\0';
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	if (size >= len1)
+		return (len1 + len2);
+	return ((len1 + len2) - (len1 - size));
 }

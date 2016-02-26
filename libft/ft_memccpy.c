@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Created: 2015/12/01 01:38:25 by vthomas           #+#    #+#             */
+/*   Updated: 2015/12/20 19:32:01 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
-int	main(void)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	*str;
-	int		fd;
-	int		tmp;
+	size_t			index;
+	unsigned char	*dst_tmp;
+	unsigned char	*src_tmp;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	index = 0;
+	dst_tmp = (unsigned char *)dst;
+	src_tmp = (unsigned char *)src;
+	while (index != n)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
-		ft_putstr(str);
-		ft_putendl("");
-//		ft_putstr("\t-\t");
-//		ft_putendl(&str[ft_strlen(str) + 1]);
-		tmp++;
+		dst_tmp[index] = src_tmp[index];
+		if (dst_tmp[index] == (unsigned char)c)
+			return (dst + index + 1);
+		index++;
 	}
-	ft_putendl("");
-	close(fd);
-	return (0);
+	return (NULL);
 }

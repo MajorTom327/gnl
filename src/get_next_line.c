@@ -6,7 +6,7 @@
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 18:37:33 by vthomas           #+#    #+#             */
-/*   Updated: 2016/01/21 07:40:16 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/02/26 07:05:40 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,43 @@
 #include "libft.h"
 #include <stdio.h>
 
-static int	static_load(char *str, char *line)
+static void	save(char **line, char *str)
 {
-	size_t i;
-	int j;
+	static char saved[BUFF_SIZE];
 
-	i = 0;
-	j = 0;
-	while (str[j] != '\n')
-		j++;
-	while (str[j] != '\0')
+	if (str == NULL)
 	{
-		line[i] = str[j];
-		i++;
-		j++;
+		if (saved[0] != 0)
+			ft_strcat(*line, saved);
 	}
-	ft_putstr("STATIC_LOAD:");
-	ft_putstr(str);
-	return (++j);
+	else
+		ft_strcpy(saved, str);
 }
 
-int	get_next_line(int const fd, char **line)
+int			get_next_line(int const fd, char **line)
 {
-	int			i;
-	int			j;
-	static char	*str = NULL;
+	char	*tmp;
+	int		i;
 
-	i = 0;
-	j = 0;
-	if (str == NULL)
-		str = ft_strnew(BUFF_SIZE);
-	else
-		j = static_load(str, *line);
-	if (str == NULL)
+	i = 1;
+	ft_strclr(*line);
+	tmp = ft_strnew(BUFF_SIZE + 1);
+	if (fd < 0 || line == NULL || tmp == NULL)
 		return (-1);
-	ft_strclr(line[0]);
-	read(fd, str, BUFF_SIZE);
-	while (str[i] != '\n' && str[i] != EOF)
+	save(line, NULL);
+	while (i != 0)
 	{
-		line[0][j] = str[i];
-		i++;
-		j++;
-		if (i != BUFF_SIZE)
-			continue;
-		i = 0;
-		if (read(fd, str, BUFF_SIZE) == -1)
-			return (-1);
+		i = read(fd, tmp, BUFF_SIZE);
+		if (ft_strchr(tmp, '\n') != NULL)
+		{
+			*ft_strchr(tmp, '\n') = '\0';
+			save(NULL, ft_strchr(tmp, '\0') + 1);
+			ft_strcat(*line, tmp);
+			return (1);
+		}
+		ft_strcat(*line, tmp);
+		if (i < BUFF_SIZE)
+			return (0);
 	}
-	if (str[i] == EOF)
-		return (0);
-	*line[i] = '\0';
 	return (1);
 }
