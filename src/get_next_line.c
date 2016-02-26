@@ -6,7 +6,7 @@
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 18:37:33 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 07:05:40 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/02/26 08:21:23 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,16 @@ static void	save(char **line, char *str)
 
 	if (str == NULL)
 	{
-		if (saved[0] != 0)
+		if (saved[0] != '\0')
 			ft_strcat(*line, saved);
+		ft_strclr(saved);
 	}
 	else
+	{
 		ft_strcpy(saved, str);
+		*(str - 1) = '\n';
+		*str = '\0';
+	}
 }
 
 int			get_next_line(int const fd, char **line)
@@ -46,7 +51,7 @@ int			get_next_line(int const fd, char **line)
 			*ft_strchr(tmp, '\n') = '\0';
 			save(NULL, ft_strchr(tmp, '\0') + 1);
 			ft_strcat(*line, tmp);
-			return (1);
+			break;
 		}
 		ft_strcat(*line, tmp);
 		if (i < BUFF_SIZE)

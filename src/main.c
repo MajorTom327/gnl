@@ -6,7 +6,7 @@
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 06:39:02 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/02/26 08:17:24 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ int	main(void)
 	int		tmp;
 
 	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
+	fd = open("./bigfile", O_RDWR);
 	tmp = 0;
-	while (get_next_line(fd, &str) && tmp < 32)
+	while (get_next_line(fd, &str))
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
+//		ft_putnbr(tmp);
+//		ft_putstr("\t-\t");
 		ft_putstr(str);
-		ft_putendl("");
 //		ft_putstr("\t-\t");
 //		ft_putendl(&str[ft_strlen(str) + 1]);
 		tmp++;
