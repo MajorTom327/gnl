@@ -6,7 +6,7 @@
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 18:37:33 by vthomas           #+#    #+#             */
-/*   Updated: 2016/02/26 08:21:23 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/03/15 19:56:06 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,20 @@
 
 static void	save(char **line, char *str)
 {
-	static char saved[BUFF_SIZE];
+	static char	saved[BUFF_SIZE + 1];
+	size_t		i;
 
 	if (str == NULL)
 	{
-		if (saved[0] != '\0')
-			ft_strcat(*line, saved);
+		i = 0;
+		while (i != ft_strlen(saved))
+		{
+			if (saved[i] != '\n')
+				break ;
+			i++;
+		}
+		if (i != ft_strlen(saved))
+			ft_strcat(*line, &saved[i]);
 		ft_strclr(saved);
 	}
 	else
@@ -39,23 +47,26 @@ int			get_next_line(int const fd, char **line)
 
 	i = 1;
 	ft_strclr(*line);
-	tmp = ft_strnew(BUFF_SIZE + 1);
+	tmp = ft_strnew(BUFF_SIZE + 2);
 	if (fd < 0 || line == NULL || tmp == NULL)
 		return (-1);
 	save(line, NULL);
 	while (i != 0)
 	{
-		i = read(fd, tmp, BUFF_SIZE);
+		i = read(fd, tmp, BUFF_SIZE + 1);
 		if (ft_strchr(tmp, '\n') != NULL)
 		{
 			*ft_strchr(tmp, '\n') = '\0';
-			save(NULL, ft_strchr(tmp, '\0') + 1);
+			save(NULL, &tmp[ft_strlen(tmp) + 1]);
 			ft_strcat(*line, tmp);
-			break;
+			break ;
 		}
 		ft_strcat(*line, tmp);
-		if (i < BUFF_SIZE)
+		if (i < BUFF_SIZE + 1 || ft_strchr(*line, EOF) != NULL)
+		{
+			*line[ft_strlen(*line) - 3] = '\0';
 			return (0);
+		}
 	}
 	return (1);
 }
