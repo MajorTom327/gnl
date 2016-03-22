@@ -34,10 +34,8 @@ static int	get_value(const char *str)
 static int	get_sign(const char *str)
 {
 	size_t	i;
-	int		cur_sign;
 
 	i = 0;
-	cur_sign = 1;
 	while (str[i] == ' ' || str[i] == '\v' || str[i] == '\t' || str[i] == '\r'
 				|| str[i] == '\f' || str[i] == '\n')
 		i++;

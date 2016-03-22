@@ -34,17 +34,10 @@ static void	ft_print_nb(int n, int fd, int pow)
 
 void		ft_putnbr_fd(int n, int fd)
 {
-	int tmp;
-	int tmp_pow;
-	int total_pow;
-
 	if (n == -2147483648)
 	{
 		ft_putstr_fd("-2147483648", fd);
 		return ;
 	}
-	tmp = 0;
-	tmp_pow = ft_tpow(n);
-	total_pow = -1;
 	ft_print_nb(n, fd, ft_tpow(n) - 1);
 }
