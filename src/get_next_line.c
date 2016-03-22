@@ -14,59 +14,40 @@
 #include "libft.h"
 #include <stdio.h>
 
-static void	save(char **line, char *str)
+
+static void	f_save(char **line, char *str)
 {
-	static char	saved[BUFF_SIZE + 1];
-	size_t		i;
+	static char saved[BUFF_SIZE + 1];
 
 	if (str == NULL)
 	{
-		i = 0;
-		while (i != ft_strlen(saved))
-		{
-			if (saved[i] != '\n')
-				break ;
-			i++;
-		}
-		if (i != ft_strlen(saved))
-			ft_strcat(*line, &saved[i]);
-		ft_strclr(saved);
+		ft_strclr(*line);
+		ft_strcat(*line, saved);
+		return ;
 	}
-	else
-	{
-		ft_strcpy(saved, str);
-		*(str - 1) = '\n';
-		*str = '\0';
-	}
+	ft_strclr(saved);
+	ft_strcat(saved, str);
 }
 
 int			get_next_line(int const fd, char **line)
 {
-	char	*tmp;
-	int		i;
+	char	*str;
 
-	i = 1;
-	ft_strclr(*line);
-	tmp = ft_strnew(BUFF_SIZE + 2);
-	if (fd < 0 || line == NULL || tmp == NULL)
+	if (fd < 0)
 		return (-1);
-	save(line, NULL);
-	while (i != 0)
+	str = ft_strnew(BUFF_SIZE + 1);
+	f_save(line, NULL);
+	while (read(fd, str, BUFF_SIZE))
 	{
-		i = read(fd, tmp, BUFF_SIZE + 1);
-		if (ft_strchr(tmp, '\n') != NULL)
+		if (ft_strchr(str, '\n') == NULL)
 		{
-			*ft_strchr(tmp, '\n') = '\0';
-			save(NULL, &tmp[ft_strlen(tmp) + 1]);
-			ft_strcat(*line, tmp);
-			break ;
+			ft_strcat(*line, str);
+			continue;
 		}
-		ft_strcat(*line, tmp);
-		if (i < BUFF_SIZE + 1 || ft_strchr(*line, EOF) != NULL)
-		{
-			*line[ft_strlen(*line) - 3] = '\0';
-			return (0);
-		}
+		*ft_strchr(str, '\n') = '\0';
+		ft_strcat(*line, str);
+		f_save(line, ft_strchr(str, '\0') + 1);
+		return (1);
 	}
-	return (1);
+	return (0);
 }

@@ -24,18 +24,17 @@ int	main(void)
 	str = ft_strnew(90);
 	fd = open("./lorem", O_RDWR);
 	tmp = 0;
-	ft_putendl("START WORKING");
-//	get_next_line(fd, &str);
-//	ft_putstr(str);
+	ft_putendl("\033[32mSTART WORKING\033[0m");
 	while (get_next_line(fd, &str))
 	{
 		ft_putnbr(tmp);
 		ft_putstr("\t-\t");
  		ft_putstr(str);
+		ft_putendl("");
 		tmp++;
 	}
-	//ft_putendl(str);
-	ft_putendl("STOP WORKING");
+//	ft_putendl(str);
+	ft_putendl("\033[31mSTOP WORKING\033[0m");
 	close(fd);
 	return (0);
 }
