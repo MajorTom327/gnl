@@ -16,7 +16,7 @@ NAME=gnl
 DEBUG=yes
 CC=gcc
 ifeq ($(DEBUG),yes)
-	export CFLAGS=-Wall -Wextra -Werror -g
+	export CFLAGS=-Wall -Wextra -g
 else
 	export CFLAGS=-Wall -Wextra -Werror
 endif

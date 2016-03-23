@@ -18,11 +18,15 @@
 static void	f_save(char **line, char *str)
 {
 	static char saved[BUFF_SIZE + 1];
+	size_t		i;
 
 	if (str == NULL)
 	{
+		i = 0;
 		ft_strclr(*line);
-		ft_strcat(*line, saved);
+		while (saved[i] == '\n')
+			i++;
+		ft_strcat(*line, &saved[i]);
 		return ;
 	}
 	ft_strclr(saved);
@@ -32,6 +36,7 @@ static void	f_save(char **line, char *str)
 int			get_next_line(int const fd, char **line)
 {
 	char	*str;
+	size_t	i;
 
 	if (fd < 0)
 		return (-1);
@@ -39,12 +44,15 @@ int			get_next_line(int const fd, char **line)
 	f_save(line, NULL);
 	while (read(fd, str, BUFF_SIZE))
 	{
+		i = 0;
 		if (ft_strchr(str, '\n') == NULL)
 		{
 			ft_strcat(*line, str);
 			continue;
 		}
-		*ft_strchr(str, '\n') = '\0';
+		while (str[i] == '\n')
+			i++;
+		*ft_strchr(&str[i], '\n') = '\0';
 		ft_strcat(*line, str);
 		f_save(line, ft_strchr(str, '\0') + 1);
 		return (1);
