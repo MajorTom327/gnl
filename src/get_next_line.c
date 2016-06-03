@@ -1,61 +1,45 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:37:33 by vthomas           #+#    #+#             */
-/*   Updated: 2016/03/15 19:56:06 by vthomas          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
-#include "libft.h"
-#include <stdio.h>
+#include <unistd.h>
 
-
-static void	f_save(char **line, char *str)
+static char *get_before_eol(char *str)
 {
-	static char saved[BUFF_SIZE + 1];
-	size_t		i;
+	char *c_eol;
+	char *ret;
 
-	if (str == NULL)
-	{
-		i = 0;
-		ft_strclr(*line);
-		while (saved[i] == '\n')
-			i++;
-		ft_strcat(*line, &saved[i]);
-		return ;
-	}
-	ft_strclr(saved);
-	ft_strcat(saved, str);
+	c_eol = ft_strchr(str, '\n');
+	ret = ft_strnew(ft_strlen(str));
+	ft_strncpy(ret, str, (c_eol - str));
+	return (ret);
 }
 
-int			get_next_line(int const fd, char **line)
+static int get_save(char *line, int get)
 {
-	char	*str;
-	size_t	i;
+	static char *str = NULL;
 
-	if (fd < 0)
-		return (-1);
-	str = ft_strnew(BUFF_SIZE + 1);
-	f_save(line, NULL);
-	while (read(fd, str, BUFF_SIZE))
+	if (get && str)
 	{
-		i = 0;
-		if (ft_strchr(str, '\n') == NULL)
-		{
-			ft_strcat(*line, str);
-			continue;
-		}
-		while (str[i] == '\n')
-			i++;
-		*ft_strchr(&str[i], '\n') = '\0';
-		ft_strcat(*line, str);
-		f_save(line, ft_strchr(str, '\0') + 1);
+		ft_memdel(*line);
+		*line = get_before_eol(str);
+		ft_strdup(str, ft_strchr(str, '\n'));
 		return (1);
 	}
+	str = ft_strdup(line, ft_strchr(line, '\n'));
+	return (0);
+}
+
+int	get_next_line(int const fd, char **line)
+{
+	char *tmp;
+
+	if (get_save(*line, 1))
+		return (1);
+	tmp = ft_strnew(BUFF_SIZE);
+	while (ft_strchr(tmp, NULL))
+	{
+		read(1, tmp, BUFF_SIZE);
+		ft_strcat(*line, tmp);
+	}
+	if ()
+
 	return (0);
 }

@@ -1,40 +1,28 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/20 18:08:51 by vthomas           #+#    #+#             */
-/*   Updated: 2016/03/15 19:40:55 by vthomas          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
+#include "debug.h"
 #include <fcntl.h>
-#include <stdio.h>
 #include "libft.h"
 
 int	main(void)
 {
-	char	*str;
 	int		fd;
-	int		tmp;
+	char	*str;
 
-	str = ft_strnew(90);
-	fd = open("./lorem", O_RDWR);
-	tmp = 0;
-	ft_putendl("\033[32mSTART WORKING\033[0m");
-	while (get_next_line(fd, &str))
+	dbg_title("Debut du Main");
+	fd = open("./lorem", O_RDONLY);
+	if (fd == -1)
 	{
-		ft_putnbr(tmp);
-		ft_putstr("\t-\t");
- 		ft_putstr(str);
-		ft_putendl("");
-		tmp++;
+		dbg_info("main", "ERROR OPENING", 0);
+		return (EXIT_FAILURE);
 	}
-//	ft_putendl(str);
-	ft_putendl("\033[31mSTOP WORKING\033[0m");
+	dbg_info("main", "Open ok !", 0);
+	str = ft_strnew(64);
+	if (str == NULL)
+		return (EXIT_FAILURE);
+	dbg_info("main", "strnew ok !", 0);
+	dbg_title("Debut du GNL");
+	while (get_next_line(fd, &str))
+		ft_putendl(str);
 	close(fd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
