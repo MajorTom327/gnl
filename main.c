@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:30 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/11 03:10:45 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/06/11 04:08:06 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(void)
 		dbg_var_int("main","turn", turn, 1);
 		dbg_var_int("main","ret", ret, 1);
 		dbg_var_str("main","str", str, 1);
+		ft_putendl(str);
 		dbg_breakpoint("main", 1);
 	}
 	close(fd);

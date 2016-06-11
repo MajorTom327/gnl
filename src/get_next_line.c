@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/11 03:10:10 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/06/11 04:07:40 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 
 #include "get_next_line.h"
 #include "libft.h"
+
+static void	sf_repstart(char **str)
+{
+	char *tmp;
+	char *eol;
+
+	tmp = ft_strdup(*str);
+	eol = ft_strchr(tmp, '\n');
+	ft_strdel(str);
+	*str = ft_strdup(eol + 1);
+	ft_strdel(&tmp);
+}
 
 static int	sf_save(char **str)
 {
@@ -35,7 +47,8 @@ static int	sf_save(char **str)
 		if (ft_strchr(*str,'\n') != NULL)
 		{
 			dbg_info("sf_save", "In the second if", 2);
-			*ft_strchr(*str, '\n') = '\n';
+			*ft_strchr(*str, '\n') = '\0';
+			sf_repstart(&save);
 			return (1);
 		}
 		return (0);
@@ -56,6 +69,7 @@ static void	sf_addtostr(char **dst, const char *src)
 	*dst = ft_strnew(ft_strlen(tmp) + ft_strlen(src));
 	ft_strcat(*dst, tmp);
 	ft_strcat(*dst, src);
+	ft_strdel(&tmp);
 }
 
 int			get_next_line(const int fd, char **line)
@@ -90,8 +104,5 @@ int			get_next_line(const int fd, char **line)
 		tmp++;
 		sf_save(&tmp);
 	}
-	if (ret == BUFF_SIZE)
-		return (1);
-	else
-		return (0);
+	return (ret == BUFF_SIZE);
 }
