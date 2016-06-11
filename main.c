@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:30 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/10 03:10:06 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/06/11 03:10:45 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(void)
 	str = ft_strnew(100);
 	dbg_info("main","String creation \tOK", 1);
 	turn = 0;
-	while ((ret = get_next_line(fd, &str)) && turn < 4)
+	while ((ret = get_next_line(fd, &str))/* && turn < 4*/)
 	{
 		turn++;
 		dbg_var_int("main","turn", turn, 1);

@@ -6,98 +6,92 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/10 03:16:57 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/06/11 03:10:10 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
 #include <debug.h>
+
 #include "get_next_line.h"
 #include "libft.h"
 
-static char	*res_str(char *str)
+static int	sf_save(char **str)
 {
-	int i;
-	int j;
+	static char *save = NULL;
 
-	i = (int)(ft_strchr(str, '\n') - str);
-	j = 0;
-	dbg_var_str("res_str", "str", str, 4);
-	while (str[i] != '\0')
+	dbg_info("sf_save", "start", 2);
+	dbg_var_str("sf_save", "str", *str, 2);
+	if (*str == NULL)
 	{
-		str[j] = str[i];
-		str[i] = '\0';
-		i++;
-		j++;
-	}
-	dbg_var_str("res_str", "str", str, 4);
-	return (str);
-}
-
-static void	f_purge(char *str)
-{
-	while (*str != '\n' && *str != '\0')
-		str++;
-	while (*str != '\0')
-	{
-		*str = '\0';
-		str++;
-	}
-}
-
-static int	save_str(char *line, int s)
-{
-	static char	*save = NULL;
-	int			size;
-
-	dbg_var_int("save_str", "Entering in with", s, 3);
-	if (save == NULL && !s)
+		dbg_info("sf_save", "In first if", 2);
+		if (save == NULL)
+		{
+			*str = ft_strnew(1);
+			return (0);
+		}
+		*str = ft_strdup(save);
+		dbg_info("sf_save", "dup with success", 2);
+		if (ft_strchr(*str,'\n') != NULL)
+		{
+			dbg_info("sf_save", "In the second if", 2);
+			*ft_strchr(*str, '\n') = '\n';
+			return (1);
+		}
 		return (0);
-	if (s)
-	{
-		if (save != NULL)
-			ft_memdel((void **)&save);
-		save = ft_strdup(line);
-		return (1);
 	}
-	if (!s)
-	{
-		ft_strclr(line);
-		size = save - ft_strchr(save, '\n');
-
-		line = ft_strnew(ft_strlen(save));
-		line = ft_strdup(save);
-		//ft_strclr(save);
-		dbg_var_str("save_str", "save", save, 3);
-		save = res_str(save);
-		f_purge(line);
-		return (1);
-	}
+	dbg_var_str("sf_save", "save (at end)", save, 2);
+	ft_strdel(&save);
+	dbg_info("sf_save", "After clear", 2);
+	save = ft_strdup(*str);
 	return (0);
+}
+
+static void	sf_addtostr(char **dst, const char *src)
+{
+	char *tmp;
+
+	tmp = ft_strdup(*dst);
+	ft_strdel(dst);
+	*dst = ft_strnew(ft_strlen(tmp) + ft_strlen(src));
+	ft_strcat(*dst, tmp);
+	ft_strcat(*dst, src);
 }
 
 int			get_next_line(const int fd, char **line)
 {
-	int		ret;
 	char	*tmp;
+	int		ret;
 
-	dbg_title("get_next_line");
+	dbg_title("GET_NEXT_LINE");
 	if (fd == -1)
 		return (-1);
-	save_str(*line, 0);
+	ft_strdel(line);
+	dbg_info("get_next_line", "After del n1", 1);
 	tmp = ft_strnew(BUFF_SIZE);
-	dbg_var_int("get_next_line", "BUFF_SIZE", BUFF_SIZE, 2);
+	if (sf_save(line))//On recupere ancienne chaine
+		return (1);//Si on a une chaine complete deja
 	ret = BUFF_SIZE;
-	while (ft_strchr(tmp, '\n') == NULL && ret == BUFF_SIZE)
+	dbg_info("get_next_line", "Before while", 1);
+	dbg_var_str("get_next_line", "line", *line, 1);
+	while (ft_strchr(*line, '\n') == NULL && ret == BUFF_SIZE)
 	{
+		dbg_info("get_next_line", "in the while", 1);
 		ret = read(fd, tmp, BUFF_SIZE);
-		dbg_var_int("get_next_line", "ret", ret, 2);
-		ft_strcat(*line, tmp);
+		sf_addtostr(line, tmp);
 	}
-	if (ret < BUFF_SIZE)
+	dbg_var_str("get_next_line", "*line", *line, 1);
+	dbg_var_str("get_next_line", "tmp", tmp, 1);
+	ft_strdel(&tmp);
+	tmp = ft_strchr(*line, '\n');
+	if (tmp != NULL)
+	{
+		*tmp = '\0';
+		tmp++;
+		sf_save(&tmp);
+	}
+	if (ret == BUFF_SIZE)
+		return (1);
+	else
 		return (0);
-	save_str(ft_strchr(*line, '\n'), 1);
-	f_purge(ft_strchr(*line, '\n'));
-	return (1);
 }
