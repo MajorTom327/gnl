@@ -21,6 +21,7 @@ re: fclean all
 test: re
 	@clear
 	-@./$(NAME)
+	-@./$(NAME) no_line_feed
 
 42fc:
 	@cp ./include/get_next_line.h ../gnl_test
