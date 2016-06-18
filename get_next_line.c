@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/17 06:09:59 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/06/18 11:14:19 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,23 @@ int			get_next_line(const int fd, char **line)
 	if (fd == -1 || line == NULL)
 		return (-1);
 	ft_strdel(line);
-	tmp = ft_strnew(BUFF_SIZE);
 	if (sf_save(line))
 		return (1);
 	ret = BUFF_SIZE;
 	while (ft_strchr(*line, '\n') == NULL && ret == BUFF_SIZE)
 	{
+		tmp = ft_strnew(BUFF_SIZE);
 		ret = read(fd, tmp, BUFF_SIZE);
-		if ((ret == 0 && **line) || ret < 0)
-			return ((ret < 0) ? -1 : 1);
+		if (ret < 0)
+			return (-1);
 		sf_addtostr(line, tmp);
+		ft_strdel(&tmp);
 	}
-	ft_strdel(&tmp);
 	if ((tmp = ft_strchr(*line, '\n')))
 	{
 		*tmp = '\0';
 		tmp++;
 		sf_save(&tmp);
 	}
-	return (ret != 0);
+	return ((ft_strlen(*line)));
 }

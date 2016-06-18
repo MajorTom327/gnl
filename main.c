@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:30 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/17 05:08:18 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/06/18 10:23:50 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(void)
 	int	turn;
 
 	dbg_title("start");
+	dbg_var_int("main", "BUFF_SIZE", BUFF_SIZE, 1);
 	fd = open("./test", O_RDONLY);
 	dbg_info("main","Open \t\tOK", 1);
 	str = ft_strnew(100);
@@ -38,6 +39,7 @@ int	main(void)
 		dbg_breakpoint("main", 1);
 	}
 	dbg_var_str("main","str(at end)", str, 1);
+	dbg_var_int("main", "Number of 1", turn, 1);
 	close(fd);
 	dbg_title("end");
 	return (EXIT_SUCCESS);
