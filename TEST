@@ -1,0 +1,15 @@
+#!/bin/bash
+
+FILE=$1
+
+./comp
+sleep 1
+printf "\n \e[36m[ Running... ]\n\n\e[33m"
+./test_gnl $FILE > out
+printf "\n   \e[32m[ CORRECT OUTPUT ]                    \e[31m[ GNL OUTPUT ]\n\n\e[33m"
+pr -mto3 -w75 $FILE ./out
+printf "<\n \e[34m[ DIFF OUTPUT ]\n\n\e[33m"
+diff $FILE ./out
+printf "<\n \e[34m[ END ]\n\n\e[33m"
+#mv $FILE ./test/.done/
+rm out

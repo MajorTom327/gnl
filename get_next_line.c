@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/24 01:21:50 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/06/24 03:40:29 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static void	sf_addtostr(char **dst, const char *src)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = ft_strdup(*dst);
 	ft_strdel(dst);
