@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/06/24 03:40:29 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/07/14 02:28:13 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ static void	sf_repstart(char **str)
 	ft_strdel(&tmp);
 }
 
-static int	sf_save(char **str)
+static int	sf_save(char **str, int st)
 {
 	static char *save = NULL;
 
+	if (st)
+		ft_strdel(&save);
 	if (*str == NULL)
 	{
 		if (save == NULL)
@@ -65,6 +67,15 @@ static int	sf_save(char **str)
 	return (0);
 }
 
+static int	sf_clear(char **str, int i)
+{
+	if (i)
+		return (1);
+	sf_save(str, 1);
+	ft_strdel(str);
+	return (0);
+}
+
 int			get_next_line(const int fd, char **line)
 {
 	char	*tmp;
@@ -73,9 +84,10 @@ int			get_next_line(const int fd, char **line)
 	if (fd == -1 || line == NULL)
 		return (-1);
 	*line = NULL;
-	if (sf_save(line))
+	if (sf_save(line, 0))
 		return (1);
 	ret = BUFF_SIZE;
+	//BOUCLE DE LECTURE PRINCIPALE
 	while (ft_strchr(*line, '\n') == NULL && ret == BUFF_SIZE)
 	{
 		tmp = ft_strnew(BUFF_SIZE);
@@ -85,11 +97,13 @@ int			get_next_line(const int fd, char **line)
 		sf_addtostr(line, tmp);
 		ft_strdel(&tmp);
 	}
+	//FIN DE LECTURE
 	if ((tmp = ft_strchr(*line, '\n')))
 	{
 		*tmp = '\0';
 		tmp++;
-		sf_save(&tmp);
+		//SAUVEGARDE DU RENDU EN TROP
+		sf_save(&tmp, 0);
 	}
-	return ((ft_strlen(*line)));
+	return (sf_clear(line, ft_strlen(*line)));//CLEAR && RETURN
 }
