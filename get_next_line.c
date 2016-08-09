@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/07/14 02:28:13 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/09 09:18:18 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int sf_save(char **line, int state)
 		if (str_save == NULL)
 			return (0);
 		*line = ft_strdup(str_save);
+		ft_strclr(str_save);
 		dbg_var_str("sf_save", "*line", *line, 3);
 		if (ft_strchr(*line, '\n') != NULL)
 			return ((int)(*ft_strchr(*line, '\n') = '\0') ? 1 : 1);
