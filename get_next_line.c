@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/09 09:18:18 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/09 09:31:12 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			get_next_line(const int fd, char **line)
 	}
 	ft_stradd(line, tmp);
 	dbg_var_str("get_next_line", "*line", *line, 0);
-	if (*line == NULL)
+	if (!ft_strlen(*line))
 		return (0);
 	else
 		return (1);
