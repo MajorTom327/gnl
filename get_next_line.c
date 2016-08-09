@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/09 09:35:59 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/09 12:06:59 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 #include "get_next_line.h"
 #include "libft/libft.h"
-#include "debug.h"
 
-static int sf_save(char **line, int state)
+static int	sf_save(char **line, int state)
 {
 	static char *str_save = NULL;
 
@@ -31,12 +30,14 @@ static int sf_save(char **line, int state)
 		return (2);
 	}
 	if (str_save != NULL)
-		ft_bzero((void *)str_save, ft_strlen(str_save));
+		ft_strclr(str_save);
 	ft_strdel(&str_save);
 	str_save = ft_strdup(ft_strchr(*line, '\n') + 1);
 	*ft_strchr(*line, '\n') = '\0';
 	return (0);
 }
+
+//TODO: Make a function for the test
 
 int			get_next_line(const int fd, char **line)
 {
@@ -55,15 +56,21 @@ int			get_next_line(const int fd, char **line)
 	{
 		ft_stradd(line, tmp);
 		if (ft_strchr(tmp, '\n'))
-			break;
+			break ;
 		ft_strclr(tmp);
 	}
+	//TODO: Function must do that if
 	if (ft_strchr(*line, '\n') != NULL)
 	{
 		sf_save(line, 0);
 		return (1);
 	}
 	ft_stradd(line, tmp);
+	if (ft_strchr(*line, '\n') != NULL)
+	{
+		sf_save(line, 0);
+		return (1);
+	}
 	if (!ft_strlen(*line))
 		return (0);
 	else
