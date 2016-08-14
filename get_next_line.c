@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/09 12:06:59 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/14 02:13:26 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 
 #include "get_next_line.h"
 #include "libft/libft.h"
+
+static void	sf_repos(char **str)
+{
+	void *tmp;
+
+	tmp = ft_strchr(*str, '\n');
+//	dbg_var_str("sf_repos", "tmp", (char *)tmp, 2);
+	if (tmp == NULL)
+		return ;
+	tmp++;
+	ft_memmove((void *)*str, tmp, ft_strlen(ft_strchr(*str, '\n')));
+//	dbg_var_str("sf_repos", "*str", *str, 2);
+}
 
 static int	sf_save(char **line, int state)
 {
@@ -24,7 +37,8 @@ static int	sf_save(char **line, int state)
 		if (str_save == NULL)
 			return (0);
 		*line = ft_strdup(str_save);
-		ft_strclr(str_save);
+		sf_repos(&str_save);
+//		ft_strclr(str_save);
 		if (ft_strchr(*line, '\n') != NULL)
 			return ((int)(*ft_strchr(*line, '\n') = '\0') ? 1 : 1);
 		return (2);
@@ -38,6 +52,27 @@ static int	sf_save(char **line, int state)
 }
 
 //TODO: Make a function for the test
+static int	sf_finaltest(int ret, char **line, char *tmp)
+{
+	if (ret == -1)
+		return (ret);
+	if (ft_strchr(*line, '\n') != NULL)
+	{
+		sf_save(line, 0);
+		return (1);
+	}
+	ft_stradd(line, tmp);
+	if (ft_strchr(*line, '\n') != NULL)
+	{
+		sf_save(line, 0);
+		return (1);
+	}
+	if (!ft_strlen(*line))
+		return (0);
+	else
+		return (1);
+
+}
 
 int			get_next_line(const int fd, char **line)
 {
@@ -59,20 +94,23 @@ int			get_next_line(const int fd, char **line)
 			break ;
 		ft_strclr(tmp);
 	}
-	//TODO: Function must do that if
-	if (ft_strchr(*line, '\n') != NULL)
-	{
-		sf_save(line, 0);
-		return (1);
-	}
-	ft_stradd(line, tmp);
-	if (ft_strchr(*line, '\n') != NULL)
-	{
-		sf_save(line, 0);
-		return (1);
-	}
-	if (!ft_strlen(*line))
-		return (0);
-	else
-		return (1);
+	return (sf_finaltest(ret, line, tmp));
+//	if (ret == -1)
+//		return (ret);
+//	//TODO: Function must do that if
+//	if (ft_strchr(*line, '\n') != NULL)
+//	{
+//		sf_save(line, 0);
+//		return (1);
+//	}
+//	ft_stradd(line, tmp);
+//	if (ft_strchr(*line, '\n') != NULL)
+//	{
+//		sf_save(line, 0);
+//		return (1);
+//	}
+//	if (!ft_strlen(*line))
+//		return (0);
+//	else
+//		return (1);
 }
