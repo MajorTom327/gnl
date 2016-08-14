@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/14 02:16:28 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/14 03:33:14 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static void	sf_repos(char **str)
 
 	tmp = ft_strchr(*str, '\n');
 	if (tmp == NULL)
+	{
+		ft_strclr(*str);
 		return ;
+	}
 	tmp++;
 	ft_memmove((void *)*str, tmp, ft_strlen(ft_strchr(*str, '\n')));
 }
