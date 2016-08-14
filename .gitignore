@@ -3,3 +3,5 @@ libft/libft.a
 test_gnl
 **/.nfs.*
 **/.*.swp
+out
+result
