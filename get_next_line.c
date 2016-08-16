@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/14 03:33:14 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/17 01:35:53 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	sf_finaltest(int ret, char **line, char *tmp)
 		return (1);
 	}
 	ft_stradd(line, tmp);
+	ft_strdel(&tmp);
 	if (ft_strchr(*line, '\n') != NULL)
 	{
 		sf_save(line, 0);
