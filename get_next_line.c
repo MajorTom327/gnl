@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/18 14:00:26 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/18 15:52:23 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int			get_next_line(const int fd, char **line)
 		ft_stradd(line, tmp);
 		if (ft_strchr(tmp, '\n'))
 			break ;
+		ft_putnbr_desc("SIZE OF STR:\t", ft_strlen(*line));
 		ft_strclr(tmp);
 	}
 	return (sf_finaltest(ret, line, tmp));

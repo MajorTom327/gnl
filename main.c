@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:30 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/18 13:18:23 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/18 15:30:12 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ int	main(int ac, char **av)
 	if (fd < 1)
 		exit(EXIT_FAILURE);
 	turn = 0;
-//	dbg_var_int("main", "BUFF_SIZE", BUFF_SIZE, 0);
-//	dbg_title("WHILE");
+	dbg_var_int("main", "BUFF_SIZE", BUFF_SIZE, 0);
+	dbg_title("WHILE");
 	while ((ret = get_next_line(fd, &str)) > 0)
 	{
 		turn++;
-//		dbg_var_int("main", "line", turn, 0);
-//		dbg_var_str("main", "str", str, 0);
-		ft_putendl(str);
+		dbg_var_int("main", "line", turn, 0);
+		dbg_var_str("main", "str", str, 0);
+//		ft_putendl(str);
 	}
-//	dbg_title("END OF WHILE");
-//	dbg_var_int("main", "nbr_line", turn, 0);
+	dbg_title("END OF WHILE");
+	dbg_var_int("main", "nbr_line", turn, 0);
 	close(fd);
 	return (EXIT_SUCCESS);
 }
