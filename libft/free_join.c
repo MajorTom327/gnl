@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   free_join.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/25 19:57:57 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/18 19:52:59 by vthomas          ###   ########.fr       */
+/*   Created: 2016/08/19 02:31:27 by vthomas           #+#    #+#             */
+/*   Updated: 2016/08/19 02:31:29 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	*ft_strcpy(char *dest, const char *src)
+char	*free_join(char *dst, char *src)
 {
-	int i;
+	char	*tmp;
 
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	tmp = dst;
+	dst = ft_strjoin(dst, src);
+	free(tmp);
+	return (dst);
 }
