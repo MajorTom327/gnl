@@ -14,7 +14,6 @@
 
 #include "get_next_line.h"
 #include "libft/libft.h"
-#include "debug.h"
 
 static void	sf_repos(char **str)
 {
@@ -89,7 +88,7 @@ int			get_next_line(const int fd, char **line)
 		*line = ft_strnew(0);
 	ret = BUFF_SIZE;
 	tmp = ft_strnew(BUFF_SIZE);
-	while ((ret = read(fd, tmp, BUFF_SIZE)) == BUFF_SIZE)
+	while ((ret = read(fd, tmp, BUFF_SIZE)) != 0)
 	{
 		*line = free_join(*line, tmp);
 		if (ft_strchr(tmp, '\n'))
