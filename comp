@@ -4,7 +4,7 @@ make -C libft re
 clang -Wall -Wextra -I libft/includes -o get_next_line.o -c get_next_line.c 
 clang -Wall -Wextra -I libft/includes -o main.o -c main.c
 if [ -f get_next_line.o ]; then
-	clang -o test_gnl main.o get_next_line.o -I libft/includes -L libft/ -lft
+	clang -o test_gnl main.o get_next_line.o -I libft/includes -L libft/ -lft libdbg.a
 	rm main.o get_next_line.o
 	printf " \e[35m[ \e[36mCompiled!\e[35m ]\e[0m\n"
 else

@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/19 02:33:17 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/25 17:46:23 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 #include "get_next_line.h"
 #include "libft/libft.h"
 
+#include "debug.h"
+
 static void	sf_repos(char **str)
 {
-	void *tmp;
-	size_t l;
+	void	*tmp;
+	size_t	l;
 
 	tmp = ft_strchr(*str, '\n');
 	if (tmp == NULL)
@@ -71,8 +73,7 @@ static int	sf_finaltest(int ret, char **line, char *tmp)
 	}
 	if (!ft_strlen(*line))
 		return (0);
-	else
-		return (1);
+	return (1);
 }
 
 int			get_next_line(const int fd, char **line)
@@ -90,6 +91,9 @@ int			get_next_line(const int fd, char **line)
 	tmp = ft_strnew(BUFF_SIZE);
 	while ((ret = read(fd, tmp, BUFF_SIZE)) != 0)
 	{
+		if (ret == -1)
+			return (-1);
+		tmp[ret] = '\0';
 		*line = free_join(*line, tmp);
 		if (ft_strchr(tmp, '\n'))
 			break ;
