@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/25 17:46:23 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/26 04:58:47 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 #include "get_next_line.h"
 #include "libft/libft.h"
-
-#include "debug.h"
 
 static void	sf_repos(char **str)
 {
@@ -62,6 +60,7 @@ static int	sf_finaltest(int ret, char **line, char *tmp)
 	if (ft_strchr(*line, '\n') != NULL)
 	{
 		sf_save(line, 0);
+		ft_strdel(&tmp);
 		return (1);
 	}
 	*line = free_join(*line, tmp);
