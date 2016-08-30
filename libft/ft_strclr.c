@@ -6,7 +6,7 @@
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/25 19:41:09 by vthomas           #+#    #+#             */
-/*   Updated: 2015/11/25 20:40:34 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/26 04:50:06 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	ft_strclr(char *s)
 {
-	int index;
-
-	index = (int)ft_strlen(s);
-	while (index != -1)
+	while (*s)
 	{
-		s[index] = '\0';
-		index--;
+		*s = '\0';
+		s++;;
 	}
 }

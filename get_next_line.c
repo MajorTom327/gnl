@@ -6,7 +6,7 @@
 /*   By: vthomas <vthomas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/10 00:43:18 by vthomas           #+#    #+#             */
-/*   Updated: 2016/08/26 04:58:47 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/31 00:23:18 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	sf_repos(char **str)
 static int	sf_save(char **line, int state)
 {
 	static char *str_save = NULL;
+	char		*tmp;
 
 	if (state)
 	{
@@ -47,9 +48,10 @@ static int	sf_save(char **line, int state)
 	}
 	if (str_save != NULL)
 		ft_strclr(str_save);
+	tmp = ft_strchr(*line, '\n');
 	ft_strdel(&str_save);
-	str_save = ft_strdup(ft_strchr(*line, '\n') + 1);
-	*ft_strchr(*line, '\n') = '\0';
+	str_save = ft_strdup(tmp + 1);
+	*tmp = '\0';
 	return (0);
 }
 

@@ -6,30 +6,37 @@
 /*   By: vthomas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/25 19:51:28 by vthomas           #+#    #+#             */
-/*   Updated: 2015/11/25 19:52:31 by vthomas          ###   ########.fr       */
+/*   Updated: 2016/08/25 16:07:20 by vthomas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *a, char const *b)
 {
-	size_t	size_str;
-	size_t	index;
-	char	*str_conc;
+	int		i;
+	int		j;
+	char	*r;
 
-	size_str = (ft_strlen(s1) + ft_strlen(s2));
-	str_conc = ft_strnew(size_str);
-	if (str_conc == NULL)
+	if (!a || !b)
 		return (NULL);
-	index = 0;
-	while (index < size_str)
+	i = 0;
+	j = 0;
+	if (!(r = (char*)malloc(sizeof(char) * (ft_strlen(a) + ft_strlen(b) + 1))))
+		return (NULL);
+	while (a[i] != '\0')
 	{
-		if (index < ft_strlen(s1))
-			str_conc[index] = s1[index];
-		else
-			str_conc[index] = s2[index - ft_strlen(s1)];
-		index++;
+		r[j] = a[i];
+		i++;
+		j++;
 	}
-	return (str_conc);
+	i = 0;
+	while (b[i] != '\0')
+	{
+		r[j] = b[i];
+		i++;
+		j++;
+	}
+	r[j] = '\0';
+	return (r);
 }
